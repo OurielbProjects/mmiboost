@@ -2,15 +2,12 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-
-const stats = [
-  { value: '2 400+', label: 'Clients satisfaits' },
-  { value: '94%', label: 'Taux de satisfaction' },
-  { value: '×8', label: 'Croissance moyenne' },
-  { value: '48h', label: 'Livraison garantie' },
-]
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 export default function Hero() {
+  const { T } = useLanguage()
+  const h = T.hero
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0A0A0F]">
       {/* Background orbs */}
@@ -23,7 +20,6 @@ export default function Hero() {
           className="orb w-[600px] h-[600px] bottom-[-150px] right-[-150px] opacity-15"
           style={{ background: 'radial-gradient(circle, #7C3AED 0%, transparent 70%)' }}
         />
-        {/* Grid pattern */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -32,7 +28,6 @@ export default function Hero() {
             backgroundSize: '60px 60px',
           }}
         />
-        {/* Radial fade center */}
         <div
           className="absolute inset-0"
           style={{
@@ -47,29 +42,21 @@ export default function Hero() {
         transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
         className="absolute top-1/4 right-[8%] hidden xl:block"
       >
-        <div className="w-16 h-16 rounded-2xl glass flex items-center justify-center text-2xl shadow-card">
-          🚀
-        </div>
+        <div className="w-16 h-16 rounded-2xl glass flex items-center justify-center text-2xl shadow-card">🚀</div>
       </motion.div>
-
       <motion.div
         animate={{ y: [0, 15, 0], rotate: [0, -3, 0] }}
         transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
         className="absolute bottom-1/3 left-[6%] hidden xl:block"
       >
-        <div className="w-14 h-14 rounded-2xl glass flex items-center justify-center text-xl shadow-card">
-          💎
-        </div>
+        <div className="w-14 h-14 rounded-2xl glass flex items-center justify-center text-xl shadow-card">💎</div>
       </motion.div>
-
       <motion.div
         animate={{ y: [0, -12, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
         className="absolute top-[20%] left-[12%] hidden lg:block"
       >
-        <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-lg shadow-card">
-          📈
-        </div>
+        <div className="w-12 h-12 rounded-2xl glass flex items-center justify-center text-lg shadow-card">📈</div>
       </motion.div>
 
       {/* Content */}
@@ -80,15 +67,10 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 cursor-default"
-          style={{
-            background: 'rgba(59,130,246,0.1)',
-            border: '1px solid rgba(59,130,246,0.25)',
-          }}
+          style={{ background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.25)' }}
         >
           <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-          <span className="text-sm text-blue-300 font-medium">
-            Stratégies digitales premium · Guides & Accompagnement VIP
-          </span>
+          <span className="text-sm text-blue-300 font-medium">{h.badge}</span>
         </motion.div>
 
         {/* Headline */}
@@ -98,12 +80,12 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.1 }}
           className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white leading-[1.08] tracking-tight mb-6"
         >
-          Propulsez votre{' '}
+          {h.headline1}{' '}
           <span className="relative">
-            <span className="gradient-text">présence</span>
+            <span className="gradient-text">{h.headline2}</span>
           </span>
           <br />
-          <span className="gradient-text">digitale</span> au sommet
+          <span className="gradient-text">{h.headline3}</span> {h.headline4}
         </motion.h1>
 
         {/* Subheadline */}
@@ -113,8 +95,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed"
         >
-          Des stratégies éprouvées, des guides premium et un accompagnement personnalisé
-          pour transformer votre présence sur les réseaux sociaux en moteur de croissance.
+          {h.sub}
         </motion.p>
 
         {/* CTAs */}
@@ -128,10 +109,10 @@ export default function Hero() {
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
             </svg>
-            Découvrir les formules
+            {h.cta1}
           </Link>
           <Link href="/#temoignages" className="btn-secondary text-base px-8 py-4 w-full sm:w-auto">
-            Voir les résultats clients
+            {h.cta2}
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
@@ -145,7 +126,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.4 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"
         >
-          {stats.map((stat, i) => (
+          {h.stats.map((stat, i) => (
             <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
@@ -153,9 +134,7 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.5 + i * 0.1 }}
               className="glass rounded-2xl px-4 py-5 text-center glass-hover cursor-default"
             >
-              <div className="font-display text-2xl sm:text-3xl font-bold gradient-text mb-1">
-                {stat.value}
-              </div>
+              <div className="font-display text-2xl sm:text-3xl font-bold gradient-text mb-1">{stat.value}</div>
               <div className="text-xs text-gray-500">{stat.label}</div>
             </motion.div>
           ))}
@@ -173,7 +152,7 @@ export default function Hero() {
             transition={{ duration: 1.5, repeat: Infinity }}
             className="flex flex-col items-center gap-2"
           >
-            <span className="text-xs text-gray-600 uppercase tracking-widest">Découvrir</span>
+            <span className="text-xs text-gray-600 uppercase tracking-widest">{h.scroll}</span>
             <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
             </svg>

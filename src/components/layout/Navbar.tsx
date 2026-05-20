@@ -4,19 +4,21 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-
-const navLinks = [
-  { href: '/', label: 'Accueil' },
-  { href: '/formules', label: 'Formules' },
-  { href: '/#benefices', label: 'Bénéfices' },
-  { href: '/#temoignages', label: 'Témoignages' },
-  { href: '/#faq', label: 'FAQ' },
-]
+import { useLanguage } from '@/lib/i18n/LanguageContext'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
+  const { lang, setLang, T } = useLanguage()
+
+  const navLinks = [
+    { href: '/', label: T.nav.home },
+    { href: '/formules', label: T.nav.formulas },
+    { href: '/#benefices', label: T.nav.benefits },
+    { href: '/#temoignages', label: T.nav.testimonials },
+    { href: '/#faq', label: T.nav.faq },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -66,8 +68,24 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* CTA */}
+          {/* CTA + Language toggle */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Language switcher */}
+            <div className="flex items-center rounded-lg overflow-hidden border border-white/10 text-xs font-semibold">
+              <button
+                onClick={() => setLang('fr')}
+                className={`px-2.5 py-1.5 transition-colors ${lang === 'fr' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+              >
+                FR
+              </button>
+              <div className="w-px h-4 bg-white/10" />
+              <button
+                onClick={() => setLang('en')}
+                className={`px-2.5 py-1.5 transition-colors ${lang === 'en' ? 'bg-white/10 text-white' : 'text-gray-500 hover:text-gray-300'}`}
+              >
+                EN
+              </button>
+            </div>
             <Link
               href="/admin"
               className="text-xs text-gray-500 hover:text-gray-300 transition-colors px-2 py-1"
@@ -75,7 +93,7 @@ export default function Navbar() {
               Admin
             </Link>
             <Link href="/formules" className="btn-primary text-sm py-2.5 px-6">
-              Voir les formules
+              {T.nav.cta}
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
@@ -118,13 +136,25 @@ export default function Navbar() {
                   </Link>
                 ))}
               </nav>
+              {/* Mobile language switcher */}
+              <div className="mt-3 flex items-center gap-2 px-4">
+                <span className="text-xs text-gray-500">Lang :</span>
+                <button
+                  onClick={() => setLang('fr')}
+                  className={`text-xs font-semibold px-2 py-1 rounded ${lang === 'fr' ? 'bg-white/10 text-white' : 'text-gray-500'}`}
+                >FR</button>
+                <button
+                  onClick={() => setLang('en')}
+                  className={`text-xs font-semibold px-2 py-1 rounded ${lang === 'en' ? 'bg-white/10 text-white' : 'text-gray-500'}`}
+                >EN</button>
+              </div>
               <div className="mt-4 pt-4 border-t border-white/8">
                 <Link
                   href="/formules"
                   onClick={() => setMenuOpen(false)}
                   className="btn-primary w-full text-sm py-3"
                 >
-                  Voir les formules →
+                  {T.nav.cta} →
                 </Link>
               </div>
             </div>
