@@ -86,12 +86,6 @@ export default function Navbar() {
                 EN
               </button>
             </div>
-            <Link
-              href="/admin"
-              className="text-xs text-gray-500 hover:text-gray-300 transition-colors px-2 py-1"
-            >
-              Admin
-            </Link>
             <Link href="/formules" className="btn-primary text-sm py-2.5 px-6">
               {T.nav.cta}
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
